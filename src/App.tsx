@@ -7,12 +7,28 @@ type ProdutoType = {
   preco:string,
   imagem:string
 }
+
+type UsuarioType = {
+  id:number,
+  nome:string,
+  email:string,
+  created_at:string,
+  updated_at:string
+}   
+
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
+  const [usuarios, setUsuario] = useState<UsuarioType[]>([])
   useEffect(()=>{
     fetch("https://one022b-marketplace-cegf.onrender.com/produtos")
     .then(resposta=>resposta.json())
     .then(dados=>setProdutos(dados))
+  },[])
+
+  useEffect(()=>{
+    fetch("https://one022b-marketplace-cegf.onrender.com/usuario")
+    .then(resposta=>resposta.json())
+    .then(dados=>setUsuario(dados))
   },[])
 
   return (
@@ -29,7 +45,18 @@ function App() {
       )
     })}
     </div>
-     
+     <div className="container-usuario">
+     {usuarios.map(usu=>{
+      return(
+        <div  key={usu.id} className='usuario-item'>
+          <h1>{usu.nome}</h1>
+          <p>{usu.email}</p>
+          <p>{usu.created_at}</p>
+          <p>{usu.updated_at}</p>
+        </div>
+      )
+    })}
+     </div>
     </>
   )
 }
