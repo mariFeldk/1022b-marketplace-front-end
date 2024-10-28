@@ -18,7 +18,7 @@ type UsuarioType = {
 
 function App() {
   const [produtos, setProdutos] = useState<ProdutoType[]>([])
-  const [usuarios, setUsuario] = useState<UsuarioType[]>([])
+  const [usuarios, setUsuarios] = useState<UsuarioType[]>([])
   useEffect(()=>{
     fetch("https://one022b-marketplace-cegf.onrender.com/produtos")
     .then(resposta=>resposta.json())
@@ -28,7 +28,7 @@ function App() {
   useEffect(()=>{
     fetch("https://one022b-marketplace-cegf.onrender.com/usuarios")
     .then(resposta=>resposta.json())
-    .then(dados=>setUsuario(dados))
+    .then(dados=>setUsuarios(dados))
   },[])
 
   return (
