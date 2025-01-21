@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './App.css'
 type ProdutoType = {
   id:number,
@@ -15,6 +16,21 @@ function App() {
     .then(resposta=>resposta.json())
     .then(dados=>setProdutos(dados))
   },[])
+  function handleExcluir(id:number){
+    fetch(`http://localhost:8000/produtos/${id}`,{
+      method:"DELETE"
+    })
+    .then(resposta=>{
+      if(resposta.status==200){
+        alert("Excluído com sucesso")
+        window.location.reload()
+      }
+      else{
+        alert("Erro ao excluir")
+      }
+    })
+  }
+
   return (
     <>  
       <div className="container-produtos">
@@ -25,6 +41,8 @@ function App() {
               <img src={prod.imagem} alt="Imagem de celular" />
               <p>{prod.preco}</p>
               <p>{prod.descricao}</p>
+              <button onClick={()=>{handleExcluir(prod.id)}}>Excluir</button>
+              <Link to={`/alterar-produto/${prod.id}`}>Alterar</Link>
             </div>
           )
         })}
